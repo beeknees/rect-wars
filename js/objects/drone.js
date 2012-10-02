@@ -15,6 +15,8 @@ cp.template.Drone = cp.template.Entity.extend({
       options = options || {};
       this.x = options.x || this.x;
       this.y = options.y || this.y;
+      this.droneSound = new cp.audio.Sound('warble');
+
       
       return options;
     },
@@ -38,6 +40,8 @@ cp.template.Drone = cp.template.Entity.extend({
           var sight_right = cp.core.width - half_sight_range;
           
           cp.game.spawn('Bullet',this.x, this.y, cp.math.random(sight_right,sight_left), player.y);
+          this.droneSound.play();
+          // console.log('drone sound');
         }
       }
     },

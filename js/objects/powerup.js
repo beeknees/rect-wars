@@ -60,6 +60,8 @@ cp.template.PowerupLaBomba = cp.template.Powerup.extend({
         this.animSpin = new cp.animate.cycle(this.animSheet, 0.1, [0, 1, 2, 3]);
         this.animSpin.repeat = true;
         this.animSet = this.animSpin;
+        this.powerUpSound = new cp.audio.Sound('photon');
+
     },
     
     upgrade: function(obj) {

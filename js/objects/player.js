@@ -31,6 +31,10 @@ cp.template.Player = cp.template.Entity.extend({
         this.animCenter = new cp.animate.cycle(this.animSheet, 1, [0]);
 
         this.animSet = this.animCenter;
+        this.laserSound = new cp.audio.Sound('photon');
+        this.shipSound = new cp.audio.Sound('photon');
+        this.collideSound = new cp.audio.Sound('crash');
+
     },
 
     update: function() {
@@ -44,34 +48,44 @@ cp.template.Player = cp.template.Entity.extend({
             this.centerShipTimer.set(.2);
             this.centerShipTimer.reset();
             this.animSet = this.animLeft;
+            this.shipSound.play();
+            console.log('left');
             this.x -= this.speed;
         }
         if (cp.input.press('right') && this.x < cp.core.width - this.width) {
             this.centerShipTimer.set(.2);
             this.centerShipTimer.reset();
             this.animSet = this.animRight;
+            this.shipSound.play();
+            console.log('right');
             this.x += this.speed;
         }
         if (cp.input.press('up') && this.y > 0) {
             this.animSet = this.animCenter;
             //this.animSet = this.animUp;
+            this.shipSound.play();
+            console.log('up');
             this.y -= this.speed;
         }
         if (cp.input.press('down') && this.y < cp.core.height - this.height) {
             this.animSet = this.animCenter;
             //this.animSet = this.animDown;
+            this.shipSound.play();
+            console.log('down');
             this.y += this.speed;
         }
 
         // Shoot
         if (cp.input.press('shoot') && this.delay.expire()) {
             cp.game.spawn('Laser', this.x + (this.width / 2), this.y);
+            this.laserSound.play();
             this.delay.reset();
         }
 
         if (this.centerShipTimer.expire()) {
             this.centerShipTimer.reset();
             this.animSet = this.animCenter;
+
         }
     },
 
@@ -118,5 +132,6 @@ cp.template.Laser = cp.template.Entity.extend({
     collide: function(object) {
         object.hp -= 1;
         this.kill();
+
     }
 });

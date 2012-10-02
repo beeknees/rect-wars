@@ -55,7 +55,12 @@ var cp = cp || {};
             },
             
             play: function() {
-                this.el.play();
+                if(this.el.currentTime > 0) {
+                    this.el.currentTime = 0;
+                }
+                else {
+                    this.el.play();
+                }
             },
             
             stop: function() {
